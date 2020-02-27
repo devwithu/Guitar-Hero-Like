@@ -10,6 +10,8 @@ public class Activator : MonoBehaviour
     private GameObject note;
     private SpriteRenderer sr;
     private Color old ;
+    public bool createMode;
+    public GameObject n;
 
 
     // Start is called before the first frame update
@@ -27,15 +29,25 @@ public class Activator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(key) )
-            StartCoroutine(Pressed());
-            
-        if (Input.GetKeyDown(key) && active)
+        if (createMode && Input.GetKeyDown(key))
         {
-            Destroy(note );
-            AddScore();
-            active = false;
+            if (Input.GetKeyDown(key) )
+                Instantiate(n, transform.position, Quaternion.identity);
         }
+        else
+        {
+            if (Input.GetKeyDown(key) )
+                StartCoroutine(Pressed());
+            
+            if (Input.GetKeyDown(key) && active)
+            {
+                Destroy(note );
+                AddScore();
+                active = false;
+            }
+        }
+
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
