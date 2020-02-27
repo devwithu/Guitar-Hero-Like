@@ -33,6 +33,8 @@ public class Activator : MonoBehaviour
         if (Input.GetKeyDown(key) && active)
         {
             Destroy(note );
+            AddScore();
+            active = false;
         }
     }
 
@@ -50,6 +52,10 @@ public class Activator : MonoBehaviour
         active = false;
     }
 
+    void AddScore()
+    {
+        PlayerPrefs.SetInt("Score", PlayerPrefs.GetInt("Score") + 100);
+    }
     IEnumerator Pressed()
     {
         
