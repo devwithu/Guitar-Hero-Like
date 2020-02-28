@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("Score",0);
         PlayerPrefs.SetInt("RockMeter",25);
+        PlayerPrefs.SetInt("Streak", 0);
+        PlayerPrefs.SetInt("HighStreak", 0);
+        PlayerPrefs.SetInt("Mult", 1);
+        PlayerPrefs.SetInt("NotesHit", 0);
+        PlayerPrefs.SetInt("Start", 1);
     }
 
     // Update is called once per frame
@@ -58,6 +64,9 @@ public class GameManager : MonoBehaviour
             multiplier = 1;
         }
         
+        if (streak > PlayerPrefs.GetInt("HighStreak"))
+            PlayerPrefs.SetInt("HighStreak", streak);
+        
         updateGUI();
     }
 
@@ -76,11 +85,18 @@ public class GameManager : MonoBehaviour
     void Lose()
     {
         print("Lose");
+        PlayerPrefs.SetInt("Start", 0);
+        SceneManager.LoadScene(2);
     }
 
     public void Win()
     {
+        if(PlayerPrefs.GetInt("HighScore") < PlayerPrefs.GetInt("Score"))
+            PlayerPrefs.SetInt("HighScore", PlayerPrefs.GetInt("Score"));
+        
+        
         print("Win");
+        SceneManager.LoadScene(1);
     }
 
     public void updateGUI()

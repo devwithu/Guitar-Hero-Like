@@ -7,6 +7,7 @@ public class Note : MonoBehaviour
 {
     private Rigidbody2D rb;
     public float speed ;
+    private bool called = false;
 
     private void Awake()
     {
@@ -23,6 +24,8 @@ public class Note : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(PlayerPrefs.GetInt("Start") == 1 && !called )
+            rb.velocity = new Vector2(0,-speed);
+        called = true;
     }
 }
