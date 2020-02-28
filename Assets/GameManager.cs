@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        PlayerPrefs.SetInt("Score",0);
+        PlayerPrefs.SetInt("RockMeter",25);
     }
 
     // Update is called once per frame
@@ -34,6 +35,11 @@ public class GameManager : MonoBehaviour
 
     public void AddStreak()
     {
+        
+        if (PlayerPrefs.GetInt("RockMeter") + 1 < 50)
+        {
+            PlayerPrefs.SetInt("RockMeter",PlayerPrefs.GetInt("RockMeter") + 1);
+        }
         streak++;
         if (streak >= 24)
         {
@@ -57,15 +63,30 @@ public class GameManager : MonoBehaviour
 
     public void ResetStreak()
     {
+
+        PlayerPrefs.SetInt("RockMeter",PlayerPrefs.GetInt("RockMeter") - 2);
+        if (PlayerPrefs.GetInt("RockMeter") < 0)
+            Lose();
+
         streak = 0;
         multiplier = 1;
         updateGUI();
+    }
+
+    void Lose()
+    {
+        print("Lose");
+    }
+
+    public void Win()
+    {
+        print("Win");
     }
 
     public void updateGUI()
     {
         PlayerPrefs.SetInt("Streak", streak);
         PlayerPrefs.SetInt("multiplier", multiplier);
-        PlayerPrefs.Save();
+        //PlayerPrefs.Save();
     }
 }

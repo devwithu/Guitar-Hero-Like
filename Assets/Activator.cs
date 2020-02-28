@@ -60,10 +60,17 @@ public class Activator : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        active = true;
+        if (other.gameObject.tag == "WinNote")
+        {
+            gm.GetComponent<GameManager>().Win();
+        }
 
         if (other.gameObject.tag == "Note")
+        {
             note = other.gameObject;
+            active = true;
+        }
+
 
     }
 
